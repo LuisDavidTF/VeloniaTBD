@@ -1,0 +1,201 @@
+<div class="container my-5">
+  <div class="form-container">
+    <h2 class="text-center mb-4">Edit Product</h2>
+    
+    <% if (error) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <form action="/products/<%= product.id %>/edit" method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="name" class="form-label">Product Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="<%= product.name %>" required>
+      </div>
+      
+      <div class="mb-3">
+        <label for="category_id" class="form-label">Category</label>
+        <select class="form-select" id="category_id" name="category_id" required>
+          <option value="">Select Category</option>
+          <option value="1" <%= product.category_id === 1 ? 'selected' : '' %>>Men</option>
+          <option value="2" <%= product.category_id === 2 ? 'selected' : '' %>>Women</option>
+          <option value="3" <%= product.category_id === 3 ? 'selected' : '' %>>Boys</option>
+          <option value="4" <%= product.category_id === 4 ? 'selected' : '' %>>Girls</option>
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required><%= product.description %></textarea>
+      </div>
+      
+      <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input type="number" class="form-control" id="price" name="price" step="0.01" value="<%= product.price %>" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Current Images</label>
+        <div class="row mb-3">
+          <% product.images.split(',').forEach((image, index) => { %>
+            <div class="col-md-3 mb-3">
+              <div class="position-relative">
+                <img src="<%= image %>" class="img-fluid rounded" alt="Product image <%= index + 1 %>">
+                <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1" 
+                        onclick="deleteImage('<%= image %>')">×</button>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+        
+        <label for="images" class="form-label">Add New Images</label>
+        <input type="file" class="form-control" id="images" name="images" multiple accept="image/*">
+        <small class="text-muted">You can upload up to 5 new images.</small>
+      </div>
+
+      <div class="mb-3">
+        <h4>Product Variants</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Color</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% variants.forEach(variant => { %>
+                <tr id="variant-<%= variant.id %>">
+                  <td>
+                    <select class="form-select variant-size" data-variant-id="<%= variant.id %>">
+                      <option value="XS" <%= variant.size === 'XS' ? 'selected' : '' %>>XS</option>
+                      <option value="S" <%= variant.size === 'S' ? 'selected' : '' %>>S</option>
+                      <option value="M" <%= variant.size === 'M' ? 'selected' : '' %>>M</option>
+                      <option value="L" <%= variant.size === 'L' ? 'selected' : '' %>>L</option>
+                      <option value="XL" <%= variant.size === 'XL' ? 'selected' : '' %>>XL</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control variant-color" 
+                           value="<%= variant.color %>" data-variant-id="<%= variant.id %>">
+                  </td>
+                  <td>
+                    <input type="number" class="form-control variant-stock" 
+                           value="<%= variant.stock %>" min="0" data-variant-id="<%= variant.id %>">
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-sm" 
+                            onclick="deleteVariant(<%= variant.id %>)">Delete</button>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+        
+        <button type="button" class="btn btn-secondary mb-3" onclick="window.location.href='/products/<%= product.id %>/variants'">
+          Add New Variant
+        </button>
+      </div>
+      
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary">Update Product</button>
+        <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+function deleteImage(imageUrl) {
+  if (confirm('Are you sure you want to delete this image?')) {
+    fetch(`/products/<%= product.id %>/images/delete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ imageUrl })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        window.location.reload();
+      } else {
+        alert('Failed to delete image');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Failed to delete image');
+    });
+  }
+}
+
+function updateVariant(variantId) {
+  const size = document.querySelector(`.variant-size[data-variant-id="${variantId}"]`).value;
+  const color = document.querySelector(`.variant-color[data-variant-id="${variantId}"]`).value;
+  const stock = document.querySelector(`.variant-stock[data-variant-id="${variantId}"]`).value;
+
+  fetch(`/products/<%= product.id %>/variants/${variantId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ size, color, stock })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (!data.success) {
+      alert('Failed to update variant');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Failed to update variant');
+  });
+}
+
+function deleteVariant(variantId) {
+  if (confirm('Are you sure you want to delete this variant?')) {
+    fetch(`/products/<%= product.id %>/variants/${variantId}`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById(`variant-${variantId}`).remove();
+      } else {
+        alert('Failed to delete variant');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Failed to delete variant');
+    });
+  }
+}
+
+function confirmDelete() {
+  if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/products/<%= product.id %>/delete';
+    document.body.appendChild(form);
+    form.submit();
+  }
+}
+
+// Auto-save variants when changed
+document.querySelectorAll('.variant-size, .variant-color, .variant-stock').forEach(element => {
+  element.addEventListener('change', () => {
+    updateVariant(element.dataset.variantId);
+  });
+});
+</script>

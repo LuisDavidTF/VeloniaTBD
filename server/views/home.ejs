@@ -1,0 +1,69 @@
+
+<div class="hero text-center">
+  <div class="container">
+    <h1 class="display-4">Welcome to Velonia</h1>
+    <p class="lead">Discover the latest fashion trends for everyone in your family.</p>
+  </div>
+</div>
+
+<div class="container my-5">
+  <!-- Categories Section -->
+  <h2 class="text-center mb-4">Shop by Category</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&w=600&h=400" alt="Men's Fashion">
+        <div class="category-overlay">
+          <h3>Men</h3>
+          <a href="/category/man" class="btn btn-light">Shop Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&h=400" alt="Women's Fashion">
+        <div class="category-overlay">
+          <h3>Women</h3>
+          <a href="/category/woman" class="btn btn-light">Shop Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=600&h=400" alt="Boy's Fashion">
+        <div class="category-overlay">
+          <h3>Boys</h3>
+          <a href="/category/boy" class="btn btn-light">Shop Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="category-card">
+        <img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?auto=format&fit=crop&w=600&h=400" alt="Girl's Fashion">
+        <div class="category-overlay">
+          <h3>Girls</h3>
+          <a href="/category/girl" class="btn btn-light">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Best Sellers Section -->
+  <section class="my-5">
+    <h2 class="text-center mb-4">Best Sellers</h2>
+    <div class="row g-4">
+      <% products.slice(0, 4).forEach(product => { %>
+        <div class="col-md-3">
+          <div class="card product-card"><div class="d-flex justify-content-center align-items-center" style="height: 200px; overflow: hidden;">
+            <img src="<%= product.image_url %>" class="card-img-top" alt="<%= product.name %>" style="max-height: 100%; max-width: 100%; object-fit: contain;"></div>
+            <div class="card-body">
+              <h5 class="card-title"><%= product.name %></h5>
+              <p class="card-text">$<%= product.price %></p>
+              <a href="/product/<%= product.id %>" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </section>
+</div>
