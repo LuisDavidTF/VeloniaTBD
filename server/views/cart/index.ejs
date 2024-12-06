@@ -1,10 +1,9 @@
-
 <div class="container my-5">
-  <h1 class="mb-4">Shopping Cart</h1>
+  <h1 class="mb-4">Carrito de Compras</h1>
   
   <% if (cartItems.length === 0) { %>
     <div class="alert alert-info">
-      Your cart is empty. <a href="/" class="alert-link">Continue shopping</a>
+      Tu carrito está vacío. <a href="/" class="alert-link">Seguir comprando</a>
     </div>
   <% } else { %>
     <div class="row">
@@ -17,7 +16,7 @@
               </div>
               <div class="col-md-4">
                 <h5><%= item.name %></h5>
-                <p class="text-muted">Size: <%= item.size %>, Color: <%= item.color %></p>
+                <p class="text-muted">Tamaño: <%= item.size %>, Color: <%= item.color %></p>
               </div>
               <div class="col-md-2">
                 $<%= item.price %>
@@ -28,7 +27,7 @@
                        data-item-id="<%= item.id %>">
               </div>
               <div class="col-md-2">
-                <button class="btn btn-danger btn-sm" onclick="confirmRemoveCartItem('<%= item.id %>')">Remove</button>
+                <button class="btn btn-danger btn-sm" onclick="confirmRemoveCartItem('<%= item.id %>')">Eliminar</button>
               </div>
             </div>
           </div>
@@ -37,14 +36,14 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Order Summary</h5>
+            <h5 class="card-title">Resumen del Pedido</h5>
             <div class="d-flex justify-content-between mb-3">
               <span>Subtotal</span>
               <span>$<%= total.toFixed(2) %></span>
             </div>
             <div class="d-flex justify-content-between mb-3">
-              <span>Shipping</span>
-              <span>Free</span>
+              <span>Envío</span>
+              <span>Gratis</span>
             </div>
             <hr>
             <div class="d-flex justify-content-between mb-3">
@@ -52,7 +51,7 @@
               <strong>$<%= total.toFixed(2) %></strong>
             </div>
             <button id="checkout-button" class="btn btn-primary w-100">
-              Proceed to Checkout
+              Proceder al Pago
             </button>
           </div>
         </div>
@@ -60,6 +59,7 @@
     </div>
   <% } %>
 </div>
+
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>

@@ -1,7 +1,6 @@
-
 <div class="container my-5">
   <div class="form-container">
-    <h2 class="text-center mb-4">Edit Profile</h2>
+    <h2 class="text-center mb-4">Editar Perfil</h2>
     
     <% if (error) { %>
       <div class="alert alert-danger"><%= error %></div>
@@ -9,38 +8,38 @@
 
     <form action="/profile/edit" method="POST">
       <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
+        <label for="username" class="form-label">Nombre de Usuario</label>
         <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" required>
       </div>
       
       <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
+        <label for="email" class="form-label">Correo Electrónico</label>
         <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" required>
       </div>
       
       <div class="mb-3">
-        <label for="full_name" class="form-label">Full Name</label>
+        <label for="full_name" class="form-label">Nombre Completo</label>
         <input type="text" class="form-control" id="full_name" name="full_name" value="<%= user.full_name %>" required>
       </div>
       
       <div class="mb-3">
-        <label for="address" class="form-label">Shipping Address</label>
+        <label for="address" class="form-label">Dirección de Envío</label>
         <textarea class="form-control" id="address" name="address" rows="3"><%= user.address %></textarea>
       </div>
       
       <div class="mb-3">
-        <label for="current_password" class="form-label">Current Password</label>
+        <label for="current_password" class="form-label">Contraseña Actual</label>
         <input type="password" class="form-control" id="current_password" name="current_password">
-        <small class="text-muted">Required only if changing password</small>
+        <small class="text-muted">Requerida solo si cambia la contraseña</small>
       </div>
       
       <div class="mb-3">
-        <label for="new_password" class="form-label">New Password</label>
+        <label for="new_password" class="form-label">Nueva Contraseña</label>
         <input type="password" class="form-control" id="new_password" name="new_password">
-        <small class="text-muted">Leave blank to keep current password</small>
+        <small class="text-muted">Deje en blanco para mantener la contraseña actual</small>
       </div>
       
-      <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+      <button type="submit" class="btn btn-primary w-100">Actualizar Perfil</button>
     </form>
   </div>
 </div>

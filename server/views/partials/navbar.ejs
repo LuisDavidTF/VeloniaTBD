@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand" href="/">Velonia</a>
+    <a class="navbar-brand" href="/">Lincar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,13 +8,13 @@
       <ul class="navbar-nav me-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            Categories
+            Categorías
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/category/man">Men</a></li>
-            <li><a class="dropdown-item" href="/category/woman">Women</a></li>
-            <li><a class="dropdown-item" href="/category/boy">Boys</a></li>
-            <li><a class="dropdown-item" href="/category/girl">Girls</a></li>
+            <li><a class="dropdown-item" href="/category/man">Hombres</a></li>
+            <li><a class="dropdown-item" href="/category/woman">Mujeres</a></li>
+            <li><a class="dropdown-item" href="/category/boy">Niños</a></li>
+            <li><a class="dropdown-item" href="/category/girl">Niñas</a></li>
           </ul>
         </li>
       </ul>
@@ -22,7 +22,7 @@
         <% if (locals.user) { %>
           <li class="nav-item">
             <a class="nav-link" href="/cart">
-              <i class="bi bi-cart"></i> Cart
+              <i class="bi bi-cart"></i> Carrito
             </a>
           </li>
           <li class="nav-item dropdown">
@@ -30,18 +30,18 @@
               <%= user.username %>
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/profile">Profile</a></li>
-              <li><a class="dropdown-item" href="/products/add">Add Product</a></li>
+              <li><a class="dropdown-item" href="/profile">Perfil</a></li>
+              <li><a class="dropdown-item" href="/products/add">Agregar Producto</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+              <li><a class="dropdown-item" href="/auth/logout">Cerrar Sesión</a></li>
             </ul>
           </li>
         <% } else { %>
           <li class="nav-item">
-            <a class="nav-link" href="/auth/login">Login</a>
+            <a class="nav-link" href="/auth/login">Iniciar Sesión</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/auth/register">Register</a>
+            <a class="nav-link" href="/auth/register">Registrarse</a>
           </li>
         <% } %>
       </ul>

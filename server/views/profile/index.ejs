@@ -1,22 +1,21 @@
-
 <div class="container my-5">
   <div class="row">
     <div class="col-md-4">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Profile Information</h5>
+          <h5 class="card-title">Información del Perfil</h5>
           <p class="card-text">
-            <strong>Username:</strong> <%= user.username %><br>
-            <strong>Email:</strong> <%= user.email %><br>
-            <strong>Full Name:</strong> <%= user.full_name %><br>
+            <strong>Nombre de Usuario:</strong> <%= user.username %><br>
+            <strong>Correo Electrónico:</strong> <%= user.email %><br>
+            <strong>Nombre Completo:</strong> <%= user.full_name %><br>
           </p>
-          <a href="/profile/edit" class="btn btn-primary">Edit Profile</a>
+          <a href="/profile/edit" class="btn btn-primary">Editar Perfil</a>
         </div>
       </div>
     </div>
     
     <div class="col-md-8">
-      <h3 class="mb-4">My Products</h3>
+      <h3 class="mb-4">Mis Productos</h3>
       <div class="row g-4">
         <% userProducts.forEach(product => { %>
           <div class="col-md-4">
@@ -28,8 +27,8 @@
                 <h5 class="card-title"><%= product.name %></h5>
                 <p class="card-text">$<%= product.price %></p>
                 <div class="d-flex gap-2">
-                  <a href="/product/<%= product.id %>" class="btn btn-primary">View</a>
-                  <a href="/products/<%= product.id %>/edit" class="btn btn-secondary">Edit</a>
+                  <a href="/product/<%= product.id %>" class="btn btn-primary">Ver</a>
+                  <a href="/products/<%= product.id %>/edit" class="btn btn-secondary">Editar</a>
                 </div>
               </div>
             </div>
