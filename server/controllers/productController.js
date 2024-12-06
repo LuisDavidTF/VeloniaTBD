@@ -42,14 +42,14 @@ export const productController = {
       if (!product) {
         return res.status(404).render('error', { error: 'Product not found' });
       }
-      
-      const variants = await productDao.getProductVariants(req.params.id);
+  
+      const variants = await productDao.getAvailableVariants(req.params.id); // Obtener combinaciones
       const canEdit = req.session.user && product.seller_id === req.session.user.id;
-      
+  
       res.render('products/detail', {
         title: product.name,
         product,
-        variants,
+        variants, // Pasar variantes disponibles
         canEdit,
         user: req.session.user
       });

@@ -40,25 +40,28 @@
           <input type="hidden" name="productId" value="<%= product.id %>">
           <div class="mb-3">
             <label class="form-label">Talla</label>
-            <select class="form-select" name="size" required>
+            <select id="size-select" class="form-select" name="size" required>
               <option value="">Seleccionar Talla</option>
-              <option value="XS">XS</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
+              <% const sizes = [...new Set(variants.map(v => v.size))]; %>
+              <% sizes.forEach(size => { %>
+                <option value="<%= size %>"><%= size %></option>
+              <% }) %>
             </select>
           </div>
+          
           <div class="mb-3">
             <label class="form-label">Color</label>
-            <select class="form-select" name="color" required>
+            <select id="color-select" class="form-select" name="color" required>
               <option value="">Seleccionar Color</option>
-              <option value="Black">Negro</option>
-              <option value="White">Blanco</option>
-              <option value="Blue">Azul</option>
-              <option value="Red">Rojo</option>
+              <% const colors = [...new Set(variants.map(v => v.color))]; %>
+              <% colors.forEach(color => { %>
+                <option value="<%= color %>"><%= color %></option>
+              <% }) %>
             </select>
           </div>
+          
+            </select>
+          </div>          
           <div class="mb-3">
             <label class="form-label">Cantidad</label>
             <input type="number" class="form-control" name="quantity" value="1" min="1" max="10" required>
@@ -73,3 +76,56 @@
 <!-- Incluir dependencias de Lightbox y Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const variants = <%- JSON.stringify(variants) %>; // Datos de variantes desde el backend
+    const sizeSelect = document.getElementById('size-select');
+    const colorSelect = document.getElementById('color-select');
+
+    function updateOptions(selectedSize, selectedColor) {
+      // Filtrar colores basados en la talla seleccionada
+      const availableColors = variants
+        .filter(variant => !selectedSize || variant.size === selectedSize)
+        .map(variant => variant.color);
+
+      // Filtrar tallas basadas en el color seleccionado
+      const availableSizes = variants
+        .filter(variant => !selectedColor || variant.color === selectedColor)
+        .map(variant => variant.size);
+
+      // Mantener el valor actual de cada selector
+      const currentSize = sizeSelect.value;
+      const currentColor = colorSelect.value;
+
+      // Actualizar opciones de color
+      colorSelect.innerHTML = '<option value="">Seleccionar Color</option>';
+      [...new Set(availableColors)].forEach(color => {
+        colorSelect.innerHTML += `<option value="${color}" ${
+          color === currentColor ? 'selected' : ''
+        }>${color}</option>`;
+      });
+
+      // Actualizar opciones de talla
+      sizeSelect.innerHTML = '<option value="">Seleccionar Talla</option>';
+      [...new Set(availableSizes)].forEach(size => {
+        sizeSelect.innerHTML += `<option value="${size}" ${
+          size === currentSize ? 'selected' : ''
+        }>${size}</option>`;
+      });
+    }
+
+    // Escuchar cambios en talla
+    sizeSelect.addEventListener('change', () => {
+      const selectedSize = sizeSelect.value;
+      const selectedColor = colorSelect.value;
+      updateOptions(selectedSize, selectedColor);
+    });
+
+    // Escuchar cambios en color
+    colorSelect.addEventListener('change', () => {
+      const selectedSize = sizeSelect.value;
+      const selectedColor = colorSelect.value;
+      updateOptions(selectedSize, selectedColor);
+    });
+  });
+</script>

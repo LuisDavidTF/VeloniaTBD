@@ -58,6 +58,24 @@ export class ProductDao {
     );
     return rows;
   }
+  
+  async getAvailableColors(productId) {
+    const [rows] = await pool.execute(
+      'SELECT DISTINCT color FROM product_variants WHERE product_id = ?',
+      [productId]
+    );
+    return rows.map(row => row.color); // Devuelve solo la lista de colores
+  }
+
+  async getAvailableVariants(productId) {
+    const [rows] = await pool.execute(
+      'SELECT DISTINCT size, color FROM product_variants WHERE product_id = ?',
+      [productId]
+    );
+    return rows; // Devolverá un arreglo con todas las combinaciones disponibles
+  }
+  
+  
 
   async create(productData) {
     const { name, description, price, category_id, seller_id } = productData;
